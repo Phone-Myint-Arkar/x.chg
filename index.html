@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>X.CHG Dashboard</title>
+  <title>NexRate</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Space+Mono&display=swap" rel="stylesheet">
 
@@ -19,7 +19,7 @@
       margin:0;
       background:var(--bg);
       color:var(--text);
-      font-family: 'monospace', monospace;
+      font-family:'Syne', sans-serif;
       padding:30px;
     }
 
@@ -46,11 +46,6 @@
       border:1px solid var(--border);
       border-radius:12px;
       padding:22px;
-      transition:0.2s;
-    }
-
-    .card:hover {
-      border-color:#3a3a3a;
     }
 
     .title {
@@ -67,7 +62,7 @@
       color:white;
       padding:12px;
       margin-bottom:10px;
-      font-family:'monospace', monospace;
+      font-family:'Space Mono';
       border-radius:8px;
     }
 
@@ -81,32 +76,33 @@
       border-radius:8px;
     }
 
-    button:hover {
-      opacity:0.9;
-    }
-
     .result, .prediction {
       font-size:26px;
       font-family:'Space Mono';
       margin-top:10px;
     }
 
-    .chart-box {
-      height:360px;
+    .decision {
+      font-size:20px;
+      margin-top:10px;
+      font-weight:bold;
     }
 
-    .subtle {
-      font-size:12px;
+    .insights, .volatility {
+      font-size:13px;
       color:var(--muted);
       margin-top:6px;
+    }
+
+    .chart-box {
+      height:360px;
     }
   </style>
 </head>
 
 <body>
 
-<h1>X.CHG</h1>
-<p>Exchange Rate Converter & Predictor</p>
+<h1>NexRate</h1>
 
 <div class="layout">
 
@@ -124,7 +120,7 @@
       <button onclick="convert()">Convert</button>
 
       <div class="result" id="result">--</div>
-      <div class="subtle" id="rateInfo"></div>
+      <div class="insights" id="rateInfo"></div>
     </div>
 
   </div>
@@ -134,9 +130,12 @@
 
     <!-- Prediction -->
     <div class="card">
-      <div class="title">TOMORROW PREDICTION</div>
+      <div class="title">NEXT RATE</div>
       <div class="prediction" id="prediction">--</div>
-      <div class="subtle">Based on 7-day trend + momentum</div>
+
+      <div class="decision" id="decision">--</div>
+      <div class="insights" id="insights"></div>
+      <div class="volatility" id="volatility"></div>
     </div>
 
     <!-- Chart -->
@@ -149,24 +148,32 @@
 </div>
 
 <script>
-const API = "http://localhost:5000";
+const API = "http://127.0.0.1:5000";
 let chart;
 
 // ── Load currencies ──
 async function loadCurrencies() {
-  const res = await fetch(`${API}/api/rates`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${API}/api/rates`);
+    const data = await res.json();
 
-  const from = document.getElementById("from");
-  const to = document.getElementById("to");
+    const from = document.getElementById("from");
+    const to = document.getElementById("to");
 
-  data.currencies.forEach(c => {
-    from.innerHTML += `<option>${c}</option>`;
-    to.innerHTML += `<option>${c}</option>`;
-  });
+    from.innerHTML = "";
+    to.innerHTML = "";
 
-  from.value = "USD";
-  to.value = "THB";
+    data.currencies.forEach(c => {
+      from.innerHTML += `<option>${c}</option>`;
+      to.innerHTML += `<option>${c}</option>`;
+    });
+
+    from.value = "USD";
+    to.value = "THB";
+
+  } catch (e) {
+    console.error("Error loading currencies:", e);
+  }
 }
 
 // ── Convert ──
@@ -180,14 +187,10 @@ async function convert() {
 
   document.getElementById("result").innerText = data.result + " " + to;
 
-  // extra info
-  document.getElementById("rateInfo").innerText =
-    `1 ${from} ≈ ${(data.result / amount).toFixed(4)} ${to}`;
-
   loadAnalysis();
 }
 
-// ── Prediction + Chart ──
+// ── Analysis ──
 async function loadAnalysis() {
   const from = document.getElementById("from").value;
   const to = document.getElementById("to").value;
@@ -198,42 +201,49 @@ async function loadAnalysis() {
   const history = data.history;
   const prediction = data.prediction;
 
-  const el = document.getElementById("prediction");
+  // prediction
+  document.getElementById("prediction").innerText = prediction ?? "N/A";
 
-if (prediction === null || prediction === undefined) {
-  el.innerText = "N/A";
-} else {
-  el.innerText = prediction;
-}
+  // decision
+  const decisionEl = document.getElementById("decision");
+  decisionEl.innerText = data.decision ?? "--";
 
+  if (data.decision === "BUY") decisionEl.style.color = "lime";
+  else if (data.decision === "SELL") decisionEl.style.color = "red";
+  else decisionEl.style.color = "#aaa";
+
+  // insights + volatility
+  document.getElementById("insights").innerText = data.insights;
+  document.getElementById("volatility").innerText = "Risk: " + data.volatility;
+
+  // chart
   const labels = history.map((_, i) => `D${i+1}`);
-  const fullData = [...history, prediction];
-  const fullLabels = [...labels, "TMR"];
 
   if (chart) chart.destroy();
 
   chart = new Chart(document.getElementById("chart"), {
     type: "line",
     data: {
-      labels: fullLabels,
-      datasets: [{
-        data: fullData,
-        borderWidth: 2,
-        tension: 0.35
-      }]
-    },
-    options: {
-      plugins: { legend: { display: false }},
-      scales: {
-        x: { ticks: { color: "#666" }},
-        y: { ticks: { color: "#666" }}
-      }
+      labels: [...labels, "TMR"],
+      datasets: [
+        {
+          label: "Actual",
+          data: history,
+          borderWidth: 2
+        },
+        {
+          label: "Prediction",
+          data: [...Array(history.length-1).fill(null), prediction],
+          borderDash: [5,5],
+          borderWidth: 2
+        }
+      ]
     }
   });
 }
 
 // init
-loadCurrencies();
+window.onload = loadCurrencies;
 </script>
 
 </body>

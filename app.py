@@ -59,6 +59,43 @@ def predict_rate(rates, alpha=0.3):
 
     return round(prediction, 4)
 
+# ── Decision logic ──
+def decision_score(current, prediction):
+    diff = (prediction - current) / current
+
+    if diff > 0.01:
+        return "BUY"
+    elif diff < -0.01:
+        return "SELL"
+    else:
+        return "HOLD"
+
+# ── Insights generation ──
+def generate_insights(rates):
+    trend = rates[-1] - rates[0]
+
+    if trend > 0:
+        trend_text = "Uptrend detected"
+    else:
+        trend_text = "Downtrend detected"
+
+    volatility = max(rates) - min(rates)
+
+    if volatility < 0.5:
+        vol_text = "Low volatility"
+    elif volatility < 1.5:
+        vol_text = "Moderate volatility"
+    else:
+        vol_text = "High volatility"
+
+    return f"{trend_text} · {vol_text}"
+
+# ── Volatility score ──
+def volatility_score(rates):
+    avg = sum(rates) / len(rates)
+    variance = sum((r - avg) ** 2 for r in rates) / len(rates)
+    return round(variance, 4)
+
 # ── Routes ──
 @app.route("/api/rates")
 def rates():
@@ -69,20 +106,33 @@ def rates():
         "rates": data,
         "currencies": sorted(data.keys())
     })
-    
+
 @app.route("/api/predict")
 def predict():
-    base = request.args.get("from", "USD")
-    target = request.args.get("to", "THB")
+    try:
+        base = request.args.get("from", "USD")
+        target = request.args.get("to", "THB")
 
-    history = get_historical(base, target)
-    prediction = predict_rate(history)
+        rates = get_historical(base, target, 30)
 
-    return jsonify({
-        "history": history,
-        "prediction": prediction
-    })
+        prediction = predict_rate(rates)
+        current = rates[-1]
 
+        decision = decision_score(current, prediction) if prediction else None
+        insights = generate_insights(rates)
+        volatility = volatility_score(rates)
+
+        return jsonify({
+            "history": rates,
+            "prediction": prediction,
+            "decision": decision,
+            "insights": insights,
+            "volatility": volatility
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 @app.route("/api/convert")
 def convert_api():
     try:
