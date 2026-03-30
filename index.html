@@ -5,6 +5,7 @@
   <title>NexRate</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<<<<<<< HEAD
 
   <style>
     :root {
@@ -399,43 +400,73 @@
   <title>X.CHG Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Space+Mono&display=swap" rel="stylesheet">
+=======
+>>>>>>> 44eeea0 (v0.2 (UI changed))
 
   <style>
     :root {
-      --bg:#0a0a0a;
-      --card:#121212;
-      --border:#262626;
-      --accent:#c8f135;
-      --text:#fff;
-      --muted:#777;
+      --bg: #0a0a0a;
+      --card: #111;
+      --border: #fff;
+      --accent: #c8f135;
+      --accent2: #f135c8;
+      --text: #fff;
+      --muted: #666;
+      --danger: #ff4444;
+      --safe: #44ff88;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
+<<<<<<< HEAD
       margin:0;
       background:var(--bg);
       color:var(--text);
       font-family: 'monospace', monospace;
       padding:30px;
+=======
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      padding: 0;
+      overflow-x: hidden;
+>>>>>>> 44eeea0 (v0.2 (UI changed))
     }
 
-    h1 {
-      font-size:42px;
-      margin-bottom:25px;
-      letter-spacing:-1px;
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-bottom: 2px solid var(--border);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .layout {
-      display:grid;
-      grid-template-columns: 340px 1fr;
-      gap:24px;
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .column {
-      display:flex;
-      flex-direction:column;
-      gap:20px;
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
     }
 
+<<<<<<< HEAD
     .card {
       background:var(--card);
       border:1px solid var(--border);
@@ -446,15 +477,23 @@
 
     .card:hover {
       border-color:#3a3a3a;
+=======
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+>>>>>>> 44eeea0 (v0.2 (UI changed))
     }
 
-    .title {
-      font-size:11px;
-      letter-spacing:2px;
-      color:var(--muted);
-      margin-bottom:12px;
+    .badge {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      font-family: 'Space Mono';
     }
 
+<<<<<<< HEAD
     select, input {
       width:100%;
       background:#0c0c0c;
@@ -464,18 +503,23 @@
       margin-bottom:10px;
       font-family:'monospace', monospace;
       border-radius:8px;
+=======
+    /* ── MAIN GRID ── */
+    .main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      min-height: calc(100vh - 65px);
+>>>>>>> 44eeea0 (v0.2 (UI changed))
     }
 
-    button {
-      width:100%;
-      padding:14px;
-      background:var(--accent);
-      border:none;
-      font-weight:800;
-      cursor:pointer;
-      border-radius:8px;
+    /* ── LEFT PANEL ── */
+    .left-panel {
+      border-right: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
     }
 
+<<<<<<< HEAD
     button:hover {
       opacity:0.9;
     }
@@ -496,16 +540,328 @@
       margin-top:6px;
     }
 >>>>>>> 4d646d6 (update python logic)
+=======
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      padding: 14px 24px 10px;
+      border-bottom: 1px solid #222;
+      text-transform: uppercase;
+    }
+
+    .convert-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      background: #0a0a0a;
+      border: 2px solid var(--border);
+      color: white;
+      padding: 12px 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--accent);
+      background: #0d0d0d;
+    }
+
+    .swap-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .swap-row select { flex: 1; }
+
+    .swap-btn {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      background: #1a1a1a;
+      border: 2px solid var(--border);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .swap-btn:hover { background: #2a2a2a; }
+
+    .convert-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      border: 2px solid var(--border);
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    .convert-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--border);
+    }
+
+    .convert-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .result-box {
+      border: 2px solid var(--border);
+      padding: 18px;
+      background: #0c0c0c;
+    }
+
+    .result-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 32px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--accent);
+      transition: all 0.3s;
+    }
+
+    .rate-info {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .stat-cell {
+      padding: 22px 28px;
+      border-right: 2px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-cell:last-child { border-right: none; }
+
+    .stat-cell::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .stat-tag {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      letter-spacing: -1px;
+      transition: all 0.4s;
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .decision-BUY  { color: var(--safe); }
+    .decision-SELL { color: var(--danger); }
+    .decision-HOLD { color: var(--muted); }
+
+    /* ── CHART AREA ── */
+    .chart-area {
+      flex: 1;
+      padding: 24px;
+      position: relative;
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .chart-title {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+
+    .chart-pair {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 260px;
+    }
+
+    /* ── INSIGHTS BAR ── */
+    .insights-bar {
+      border-top: 2px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #0c0c0c;
+    }
+
+    .insight-pill {
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .insight-pill span.dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── LOADING ── */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: opacity 0.4s;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .loader-dots::after {
+      content: '';
+      animation: dots 1.2s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+      100% { content: ''; }
+    }
+
+    /* ── SKELETON PULSE ── */
+    .skeleton {
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Animate in on load */
+    .topbar, .left-panel, .stats-row, .chart-area {
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .stats-row { animation-delay: 0.1s; }
+    .chart-area { animation-delay: 0.2s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #333; }
+>>>>>>> 44eeea0 (v0.2 (UI changed))
   </style>
 </head>
 
 <body>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44eeea0 (v0.2 (UI changed))
 <!-- Loading -->
 <div class="loading-overlay" id="loader">
   <div class="loader-text">NEXRATE<span class="loader-dots"></span></div>
 </div>
+<<<<<<< HEAD
 
 <!-- Top Bar -->
 <div class="topbar">
@@ -636,53 +992,124 @@ async function loadCurrencies() {
 =======
 <h1>X.CHG</h1>
 <p>Exchange Rate Converter & Predictor</p>
+=======
+>>>>>>> 44eeea0 (v0.2 (UI changed))
 
-<div class="layout">
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-dot"></div>
+    NEXRATE
+  </div>
+  <div class="badge">CURRENCY DASHBOARD</div>
+</div>
 
-  <!-- LEFT: CONVERT -->
-  <div class="column">
+<!-- Main Layout -->
+<div class="main">
 
-    <div class="card">
-      <div class="title">CONVERT</div>
+  <!-- LEFT: Convert -->
+  <div class="left-panel">
+    <div class="section-label">// CONVERT</div>
+    <div class="convert-body">
 
-      <select id="from"></select>
-      <select id="to"></select>
+      <div class="field-row">
+        <div class="field-label">AMOUNT</div>
+        <input type="number" id="amount" value="1" min="0">
+      </div>
 
-      <input type="number" id="amount" value="1">
+      <div class="field-row">
+        <div class="field-label">FROM → TO</div>
+        <div class="swap-row">
+          <select id="from"></select>
+          <button class="swap-btn" onclick="swapCurrencies()" title="Swap">⇄</button>
+          <select id="to"></select>
+        </div>
+      </div>
 
-      <button onclick="convert()">Convert</button>
+      <button class="convert-btn" onclick="convert()">CONVERT →</button>
 
+      <div class="result-box">
+        <div class="result-label">RESULT</div>
+        <div class="result-value" id="result">—</div>
+        <div class="rate-info" id="rateInfo"></div>
+      </div>
+
+<<<<<<< HEAD
       <div class="result" id="result">--</div>
       <div class="subtle" id="rateInfo"></div>
+=======
+>>>>>>> 44eeea0 (v0.2 (UI changed))
     </div>
-
   </div>
 
-  <!-- RIGHT: ANALYSIS -->
-  <div class="column">
+  <!-- RIGHT: Analysis -->
+  <div class="right-panel">
 
+<<<<<<< HEAD
     <!-- Prediction -->
     <div class="card">
       <div class="title">TOMORROW PREDICTION</div>
       <div class="prediction" id="prediction">--</div>
       <div class="subtle">Based on 7-day trend + momentum</div>
+=======
+    <!-- Stats row -->
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-tag">NEXT RATE</div>
+        <div class="stat-value" id="prediction">—</div>
+        <div class="stat-sub">WMA prediction</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-tag">SIGNAL</div>
+        <div class="stat-value" id="decision">—</div>
+        <div class="stat-sub">smart decision</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-tag">RISK SCORE</div>
+        <div class="stat-value" id="volatility">—</div>
+        <div class="stat-sub">variance index</div>
+      </div>
+>>>>>>> 44eeea0 (v0.2 (UI changed))
     </div>
 
     <!-- Chart -->
-    <div class="card chart-box">
-      <canvas id="chart"></canvas>
+    <div class="chart-area">
+      <div class="chart-header">
+        <div class="chart-title">28-DAY HISTORY + FORECAST</div>
+        <div class="chart-pair" id="chartPair">USD / THB</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Insights bar -->
+    <div class="insights-bar">
+      <div class="insight-pill">
+        <span class="dot"></span>
+        <span id="insights">Loading analysis...</span>
+      </div>
     </div>
 
   </div>
-
 </div>
 
 <script>
 const API = "http://localhost:5000";
 let chart;
 
+// ── Swap currencies ──
+function swapCurrencies() {
+  const from = document.getElementById("from");
+  const to   = document.getElementById("to");
+  const tmp  = from.value;
+  from.value = to.value;
+  to.value   = tmp;
+}
+
 // ── Load currencies ──
 async function loadCurrencies() {
+<<<<<<< HEAD
   const res = await fetch(`${API}/api/rates`);
   const data = await res.json();
 
@@ -697,10 +1124,38 @@ async function loadCurrencies() {
   from.value = "USD";
   to.value = "THB";
 >>>>>>> 4d646d6 (update python logic)
+=======
+  try {
+    const res  = await fetch(`${API}/api/rates`);
+    const data = await res.json();
+    const from = document.getElementById("from");
+    const to   = document.getElementById("to");
+
+    from.innerHTML = "";
+    to.innerHTML   = "";
+
+    data.currencies.forEach(c => {
+      from.innerHTML += `<option>${c}</option>`;
+      to.innerHTML   += `<option>${c}</option>`;
+    });
+
+    from.value = "USD";
+    to.value   = "THB";
+
+    // hide loader
+    document.getElementById("loader").classList.add("hidden");
+
+    convert();
+  } catch (e) {
+    console.error("Error loading currencies:", e);
+    document.getElementById("loader").classList.add("hidden");
+  }
+>>>>>>> 44eeea0 (v0.2 (UI changed))
 }
 
 // ── Convert ──
 async function convert() {
+<<<<<<< HEAD
 <<<<<<< HEAD
   const from   = document.getElementById("from").value;
   const to     = document.getElementById("to").value;
@@ -852,13 +1307,20 @@ window.onload = loadCurrencies;
 =======
   const from = document.getElementById("from").value;
   const to = document.getElementById("to").value;
+=======
+  const from   = document.getElementById("from").value;
+  const to     = document.getElementById("to").value;
+>>>>>>> 44eeea0 (v0.2 (UI changed))
   const amount = document.getElementById("amount").value;
 
-  const res = await fetch(`${API}/api/convert?amount=${amount}&from=${from}&to=${to}`);
-  const data = await res.json();
+  const resultEl = document.getElementById("result");
+  resultEl.classList.add("skeleton");
 
-  document.getElementById("result").innerText = data.result + " " + to;
+  try {
+    const res  = await fetch(`${API}/api/convert?amount=${amount}&from=${from}&to=${to}`);
+    const data = await res.json();
 
+<<<<<<< HEAD
   // extra info
   document.getElementById("rateInfo").innerText =
     `1 ${from} ≈ ${(data.result / amount).toFixed(4)} ${to}`;
@@ -870,13 +1332,39 @@ window.onload = loadCurrencies;
 async function loadAnalysis() {
   const from = document.getElementById("from").value;
   const to = document.getElementById("to").value;
+=======
+    resultEl.classList.remove("skeleton");
+    resultEl.innerText = data.result
+      ? `${parseFloat(data.result).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} ${to}`
+      : "Error";
 
-  const res = await fetch(`${API}/api/predict?from=${from}&to=${to}`);
-  const data = await res.json();
+    document.getElementById("rateInfo").innerText =
+      `1 ${from} = ${(data.result / amount).toFixed(4)} ${to}`;
 
-  const history = data.history;
-  const prediction = data.prediction;
+    document.getElementById("chartPair").innerText = `${from} / ${to}`;
 
+    loadAnalysis(from, to);
+  } catch (e) {
+    resultEl.classList.remove("skeleton");
+    resultEl.innerText = "Error";
+  }
+}
+
+// ── Analysis ──
+async function loadAnalysis(from, to) {
+  from = from || document.getElementById("from").value;
+  to   = to   || document.getElementById("to").value;
+>>>>>>> 44eeea0 (v0.2 (UI changed))
+
+  const predEl  = document.getElementById("prediction");
+  const decEl   = document.getElementById("decision");
+  const volEl   = document.getElementById("volatility");
+
+  predEl.classList.add("skeleton");
+  decEl.classList.add("skeleton");
+  volEl.classList.add("skeleton");
+
+<<<<<<< HEAD
   const el = document.getElementById("prediction");
 
 if (prediction === null || prediction === undefined) {
@@ -888,9 +1376,28 @@ if (prediction === null || prediction === undefined) {
   const labels = history.map((_, i) => `D${i+1}`);
   const fullData = [...history, prediction];
   const fullLabels = [...labels, "TMR"];
+=======
+  try {
+    const res  = await fetch(`${API}/api/predict?from=${from}&to=${to}`);
+    const data = await res.json();
 
-  if (chart) chart.destroy();
+    predEl.classList.remove("skeleton");
+    decEl.classList.remove("skeleton");
+    volEl.classList.remove("skeleton");
 
+    const history    = data.history;
+    const prediction = data.prediction;
+
+    predEl.innerText = prediction ?? "N/A";
+
+    // Decision with class
+    decEl.innerText   = data.decision ?? "—";
+    decEl.className   = "stat-value decision-" + (data.decision || "HOLD");
+>>>>>>> 44eeea0 (v0.2 (UI changed))
+
+    volEl.innerText = data.volatility ?? "—";
+
+<<<<<<< HEAD
   chart = new Chart(document.getElementById("chart"), {
     type: "line",
     data: {
@@ -913,8 +1420,96 @@ if (prediction === null || prediction === undefined) {
 
 // init
 loadCurrencies();
-</script>
+=======
+    document.getElementById("insights").innerText = data.insights ?? "";
 
+    // ── Chart ──
+    const labels = history.map((_, i) => `D${i+1}`);
+    const predictData = [...Array(history.length - 1).fill(null), history[history.length - 1], prediction];
+    const predictLabels = [...labels, "TMR"];
+
+    if (chart) chart.destroy();
+
+    chart = new Chart(document.getElementById("chart"), {
+      type: "line",
+      data: {
+        labels: predictLabels,
+        datasets: [
+          {
+            label: "Actual",
+            data: history,
+            borderColor: "#c8f135",
+            backgroundColor: "rgba(200,241,53,0.06)",
+            borderWidth: 2,
+            pointRadius: 2,
+            pointHoverRadius: 5,
+            tension: 0.3,
+            fill: true,
+          },
+          {
+            label: "Forecast",
+            data: predictData,
+            borderColor: "#f135c8",
+            backgroundColor: "transparent",
+            borderWidth: 2,
+            borderDash: [5, 5],
+            pointRadius: [0,0,0,0,5],
+            tension: 0.3,
+            fill: false,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: {
+            labels: {
+              color: "#666",
+              font: { family: "Space Mono", size: 11 },
+              boxWidth: 16,
+              padding: 16,
+            }
+          },
+          tooltip: {
+            backgroundColor: "#111",
+            borderColor: "#fff",
+            borderWidth: 1,
+            titleColor: "#fff",
+            bodyColor: "#aaa",
+            titleFont: { family: "Syne", size: 13, weight: "800" },
+            bodyFont:  { family: "Space Mono", size: 12 },
+            padding: 12,
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: "#1a1a1a" },
+            ticks: { color: "#444", font: { family: "Space Mono", size: 10 }, maxTicksLimit: 10 }
+          },
+          y: {
+            grid: { color: "#1a1a1a" },
+            ticks: { color: "#444", font: { family: "Space Mono", size: 10 } }
+          }
+        }
+      }
+    });
+
+  } catch (e) {
+    predEl.classList.remove("skeleton");
+    decEl.classList.remove("skeleton");
+    volEl.classList.remove("skeleton");
+    console.error("Analysis error:", e);
+  }
+}
+
+window.onload = loadCurrencies;
+>>>>>>> 44eeea0 (v0.2 (UI changed))
+</script>
 </body>
 </html>
+<<<<<<< HEAD
 >>>>>>> 4d646d6 (update python logic)
+=======
+>>>>>>> 44eeea0 (v0.2 (UI changed))
