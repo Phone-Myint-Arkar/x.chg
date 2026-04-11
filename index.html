@@ -18,6 +18,12 @@
       --safe: #44ff88;
     }
 
+    @font-face {
+    font-family: "nexa";
+    src: url('./fonts/Nexa-Heavy.ttf') format('truetype');
+    font-weight: 800;
+    unicode-range: U+0020-007E;
+ }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -451,7 +457,7 @@
     ::-webkit-scrollbar-thumb { background: #333; }
   </style>
 </head>
-
+<meta charset="UTF-8">
 <body>
 
 <!-- Loading -->
@@ -485,12 +491,12 @@
         <div class="field-label">FROM → TO</div>
         <div class="swap-row">
           <select id="from"></select>
-          <button class="swap-btn" onclick="swapCurrencies()" title="Swap">⇄</button>
+          <button class="swap-btn" onclick="swapCurrencies()" title="Swap">&#8644;</button>
           <select id="to"></select>
         </div>
       </div>
 
-      <button class="convert-btn" onclick="convert()">CONVERT →</button>
+      <button class="convert-btn" onclick="convert()">CONVERT</button>
 
       <div class="result-box">
         <div class="result-label">RESULT</div>
