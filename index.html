@@ -4,7 +4,8 @@
   <title>NexRate</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <style>
     :root {
       --bg: #0a0a0a;
@@ -455,6 +456,55 @@
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: #111; }
     ::-webkit-scrollbar-thumb { background: #333; }
+
+    /* choices.js overrides */
+.choices {
+    margin: 0;
+    width: 100% !important
+}
+
+.choices__inner {
+    background-color: #111 !important;
+    border: 2px solid white !important;
+    border-radius: 0 !important;
+    padding: 6px 10px !important;
+    min-height: unset !important;
+    font-family: 'Space Mono', monospace !important;
+    color: white !important;
+    font-size: 14px !important;
+}
+
+.choices__list--single .choices__item {
+    color: white !important;
+}
+
+.choices__list--dropdown {
+    background-color: #111 !important;
+    border: 2px solid white !important;
+    border-radius: 0 !important;
+    font-family: 'Space Mono', monospace !important;
+}
+
+.choices__list--dropdown .choices__item {
+    color: white !important;
+    font-size: 13px !important;
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background-color: #c8f135 !important;
+    color: black !important;
+}
+
+.choices__input {
+    background-color: #111 !important;
+    color: white !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 13px !important;
+}
+
+.choices[data-type*=select-one]::after {
+    border-color: white transparent transparent !important;
+}
   </style>
 </head>
 <meta charset="UTF-8">
@@ -571,11 +621,10 @@ let currentExchangeRate = null;
 
 // ── Swap currencies ──
 function swapCurrencies() {
-  const from = document.getElementById("from");
-  const to   = document.getElementById("to");
-  const tmp  = from.value;
-  from.value = to.value;
-  to.value   = tmp;
+    const fromVal = fromChoices.getValue(true);
+    const toVal = toChoices.getValue(true);
+    fromChoices.setChoiceByValue(toVal);
+    toChoices.setChoiceByValue(fromVal);
 }
 
 // ── Load currencies ──
@@ -594,8 +643,9 @@ async function loadCurrencies() {
       to.innerHTML   += `<option>${c}</option>`;
     });
 
-    from.value = "USD";
-    to.value   = "THB";
+    initChoices();
+    fromChoices.setChoiceByValue("USD");
+    toChoices.setChoiceByValue("THB");
 
     // hide loader
     document.getElementById("loader").classList.add("hidden");
@@ -797,6 +847,21 @@ async function loadAnalysis(from, to) {
     insEl.classList.remove("skeleton");
     console.error("Analysis error:", e);
   }
+}
+let fromChoices, toChoices;
+
+function initChoices() {
+    fromChoices = new Choices('#from', {
+        searchEnabled: true,
+        itemSelectText: '',
+        shouldSort: false,
+    });
+
+    toChoices = new Choices('#to', {
+        searchEnabled: true,
+        itemSelectText: '',
+        shouldSort: false,
+    });
 }
 window.onload = loadCurrencies;
 </script>

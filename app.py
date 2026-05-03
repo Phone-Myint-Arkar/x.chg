@@ -8,10 +8,19 @@ CORS(app)
 
 # ── Get latest rates ──
 def get_rates(base="USD"):
-    res = requests.get(f"https://api.frankfurter.app/latest?from={base}")
-    data = res.json()
+    res = requests.get(f"https://api.frankfurter.dev/v1/currencies")
+    currencies = res.json()
+    
+    res2 = requests.get(f"https://api.frankfurter.dev/v1/latest?base={base}")
+    data = res2.json()
     rates = data["rates"]
     rates[base] = 1.0
+    
+    # add missing currencies with None
+    for c in currencies:
+        if c not in rates:
+            rates[c] = None
+    
     return rates
 
 # ── Get historical rates ──
@@ -19,7 +28,7 @@ def get_historical(base="USD", target="THB", days=30):
     end = datetime.today()
     start = end - timedelta(days=days)
 
-    url = f"https://api.frankfurter.app/{start.date()}..{end.date()}?from={base}&to={target}"
+    url = f"https://api.frankfurter.dev/v1/{start.date()}..{end.date()}?from={base}&to={target}"
     res = requests.get(url)
     data = res.json()["rates"]
 
